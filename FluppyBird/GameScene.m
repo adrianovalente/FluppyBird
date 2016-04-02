@@ -8,42 +8,24 @@
 
 #import "GameScene.h"
 
+@interface GameScene ()
+@property (nonatomic) SKSpriteNode * player;
+@end
+
 @implementation GameScene
 
--(void)didMoveToView:(SKView *)view {
-    /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+-(id)initWithSize:(CGSize)size {
+    if (self = [super initWithSize:size]) {
+        NSLog(@"Size: %@", NSStringFromCGSize(size));
     
-    myLabel.text = @"Hello, World!";
-    myLabel.fontSize = 45;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
+        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     
-    [self addChild:myLabel];
-}
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
+        self.player = [SKSpriteNode spriteNodeWithImageNamed:@"bird"];
+        self.player.position = CGPointMake(100, 100);
+        [self addChild:self.player];
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-        
-        sprite.xScale = 0.5;
-        sprite.yScale = 0.5;
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
     }
-}
-
--(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
+    return self;
 }
 
 @end

@@ -18,6 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsw-Mp-CAe">
+                                <rect key="frame" x="56" y="60" width="208" height="19"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                <color key="textColor" red="0.978515625" green="0.978515625" blue="0.978515625" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gu-ZD-yru" userLabel="GameOverView">
                                 <rect key="frame" x="36" y="159" width="248" height="150"/>
                                 <subviews>
@@ -64,13 +70,17 @@
                         <constraints>
                             <constraint firstItem="6gu-ZD-yru" firstAttribute="centerY" secondItem="3se-qz-xqx" secondAttribute="centerY" constant="-50" id="3Yf-MY-UIt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tuZ-aT-8Ep" secondAttribute="trailing" constant="20" id="50N-S1-kPb"/>
+                            <constraint firstItem="Gsw-Mp-CAe" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="40" id="Bl7-XM-Yks"/>
                             <constraint firstItem="tuZ-aT-8Ep" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="20" id="HWK-Tb-ML9"/>
+                            <constraint firstItem="Gsw-Mp-CAe" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="40" id="bqQ-O8-NGW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gsw-Mp-CAe" secondAttribute="trailing" constant="40" id="oeA-OW-9zO"/>
                             <constraint firstItem="6gu-ZD-yru" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="20" id="sM3-bv-CXj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6gu-ZD-yru" secondAttribute="trailing" constant="20" id="xFk-8I-Yl7"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="currentScoreLabel" destination="Gsw-Mp-CAe" id="r2G-EG-ohG"/>
                         <outlet property="gameOverView" destination="6gu-ZD-yru" id="2AL-YC-6Af"/>
                         <outlet property="moreGamesButton" destination="t7h-4x-Vpo" id="X0Z-G9-b9v"/>
                         <outlet property="playButton" destination="Bt8-Av-G5g" id="NEe-FK-fw3"/>

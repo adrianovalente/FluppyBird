@@ -10,6 +10,7 @@
 
 @protocol GameSceneProtocol <NSObject>
 -(void)onGameOverEvent;
+-(void)onPassBetweenPipes;
 @end
 
 @interface GameScene : SKScene

@@ -7,6 +7,10 @@
 //
 
 #import "GameScene.h"
+#define PIPES_VELOCITY 4
+#define PIPES_COUNT 3
+#define FIRST_PIPE_POSITION 600
+#define DISTANCE_BETWEEN_PIPES 200
 
 typedef enum {
     GameStatusIdle,
@@ -43,6 +47,7 @@ typedef enum {
 @property (nonatomic) Bird * player;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) GameStatus status;
+@property (nonatomic, strong) NSMutableArray *pipes;
 @end
 
 @implementation GameScene
@@ -61,6 +66,7 @@ typedef enum {
 -(void)goToIdle {
     [self removeBird];
     [self setupBird];
+    [self removeAllPipes];
     [self setStatus:GameStatusIdle];
 }
 
@@ -71,7 +77,57 @@ typedef enum {
     [self.player.physicsBody setContactTestBitMask:0x1 << 1];
     [self.player.physicsBody setVelocity:CGVectorMake(0, 0)];
     [self.player.physicsBody applyImpulse:CGVectorMake(0, 40)];
+    [self resetAllPipes];
+}
 
+-(void)resetAllPipes {
+    [self removeAllPipes];
+    [self initPipes];
+}
+
+-(void)initPipes {
+    for(int i=0; i<PIPES_COUNT; i++) {
+        SKSpriteNode *pipe = [SKSpriteNode spriteNodeWithImageNamed:@"pipe_bottom"];
+        [pipe setAnchorPoint:CGPointZero];
+        [pipe setPhysicsBody:[SKPhysicsBody bodyWithEdgeLoopFromRect:pipe.frame]];
+        [pipe.physicsBody setCategoryBitMask:0x1 << 1];
+        pipe.position = CGPointMake(FIRST_PIPE_POSITION + i * DISTANCE_BETWEEN_PIPES, [self getRandomYOffest]);
+        self.pipes[i] = pipe;
+        [self addChild:pipe];
+
+    }
+}
+
+-(void)updatePipes {
+    if(self.status == GameStatusPlaying) {
+        for(int i=0; i<PIPES_COUNT; i++) {
+            SKSpriteNode *pipe = (SKSpriteNode *)self.pipes[i];
+            [self updateScoreIfNecessary:pipe.position.x];
+            BOOL pipeIsGone = pipe.position.x < -30;
+            int xPosition = pipeIsGone ? FIRST_PIPE_POSITION : pipe.position.x - PIPES_VELOCITY;
+            int yPosition = pipeIsGone ? [self getRandomYOffest] : pipe.position.y;
+            pipe.position = CGPointMake(xPosition, yPosition);
+            
+        }
+    }
+}
+
+-(void)updateScoreIfNecessary:(int)position {
+    if(position < 155 && position > 150) [self.gameOverDelegate onPassBetweenPipes];
+}
+
+-(int)getRandomYOffest {
+    return [self getRandomNumberBetween:-400 to:-200];
+}
+
+-(int)getRandomNumberBetween:(int)from to:(int)to {
+    
+    return (int)from + arc4random() % (to-from+1);
+}
+
+-(void)removeAllPipes {
+    [self removeChildrenInArray:self.pipes];
+    self.pipes = [NSMutableArray arrayWithArray:@[]];
 }
 
 
@@ -86,6 +142,7 @@ typedef enum {
 
 -(void)update:(NSTimeInterval)currentTime {
     self.player.zRotation = M_PI * self.player.physicsBody.velocity.dy * 0.0005;
+    [self updatePipes];
 }
 
 -(void)setupBird {
@@ -100,6 +157,7 @@ typedef enum {
     [floor setAnchorPoint:CGPointZero];
     [floor setPhysicsBody:[SKPhysicsBody bodyWithEdgeLoopFromRect:floor.frame]];
     [floor.physicsBody setCategoryBitMask:0x1 << 1];
+    floor.zPosition = 2;
     [self addChild:floor];
 }
 
@@ -115,8 +173,8 @@ typedef enum {
 }
 
 -(void)gameOver {
+    if(self.status != GameStatusOver) [self.gameOverDelegate onGameOverEvent];
     [self setStatus:GameStatusOver];
-    [self.gameOverDelegate onGameOverEvent];
 }
 
 @end

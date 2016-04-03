@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *moreGamesButton;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) GameScene *gameScene;
+@property (weak, nonatomic) IBOutlet UILabel *currentScoreLabel;
+@property int currentScore;
 
 @end
 
@@ -23,11 +25,12 @@
 #pragma mark - Setup methods
 -(void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    [self setupEverything];
+//    [self setupEverything];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupEverything];
     [self setupGameOverButtons];
 }
 
@@ -52,6 +55,9 @@
 -(void)onPlayButtonTapped {
     [self.gameScene goToIdle];
     [self.gameOverView setHidden:YES];
+    [self.currentScoreLabel setText:@"0 points"];
+    [self.currentScoreLabel setHidden:NO];
+    [self setCurrentScore:0];
 }
 
 #pragma mark - iOS config stuff
@@ -76,8 +82,16 @@
 #pragma mark - Game Over Protocol
 - (void)onGameOverEvent {
     [self.gameOverView setHidden:NO];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"Your score: %d", self.currentScore]];
+    [self.currentScoreLabel setHidden:YES];
+    self.currentScore = 0;
+    
 }
 
+-(void)onPassBetweenPipes {
+    [self setCurrentScore:self.currentScore + 1];
+    [self.currentScoreLabel setText:[NSString stringWithFormat:@"%d points", self.currentScore]];
+}
 
 
 @end

@@ -48,6 +48,7 @@ typedef enum {
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) GameStatus status;
 @property (nonatomic, strong) NSMutableArray *pipes;
+@property (nonatomic, strong) NSMutableArray *topPipes;
 @end
 
 @implementation GameScene
@@ -87,13 +88,25 @@ typedef enum {
 
 -(void)initPipes {
     for(int i=0; i<PIPES_COUNT; i++) {
+        
+        int yPosition = [self getRandomYOffest];
+        int xPosition = FIRST_PIPE_POSITION + i * DISTANCE_BETWEEN_PIPES;
+        
         SKSpriteNode *pipe = [SKSpriteNode spriteNodeWithImageNamed:@"pipe_bottom"];
         [pipe setAnchorPoint:CGPointZero];
         [pipe setPhysicsBody:[SKPhysicsBody bodyWithEdgeLoopFromRect:pipe.frame]];
         [pipe.physicsBody setCategoryBitMask:0x1 << 1];
-        pipe.position = CGPointMake(FIRST_PIPE_POSITION + i * DISTANCE_BETWEEN_PIPES, [self getRandomYOffest]);
+        pipe.position = CGPointMake(xPosition, yPosition);
         self.pipes[i] = pipe;
         [self addChild:pipe];
+        
+        SKSpriteNode *topPipe = [SKSpriteNode spriteNodeWithImageNamed:@"pipe_top"];
+        [topPipe setAnchorPoint:CGPointZero];
+        [topPipe setPhysicsBody:[SKPhysicsBody bodyWithEdgeLoopFromRect:topPipe.frame]];
+        [topPipe.physicsBody setCategoryBitMask:0x1 << 1];
+        topPipe.position = CGPointMake(xPosition, 700 + yPosition);
+        self.topPipes[i] = topPipe;
+        [self addChild:topPipe];
 
     }
 }
@@ -102,11 +115,14 @@ typedef enum {
     if(self.status == GameStatusPlaying) {
         for(int i=0; i<PIPES_COUNT; i++) {
             SKSpriteNode *pipe = (SKSpriteNode *)self.pipes[i];
+            SKSpriteNode *topPipe = (SKSpriteNode *)self.topPipes[i];
             [self updateScoreIfNecessary:pipe.position.x];
-            BOOL pipeIsGone = pipe.position.x < -30;
+            BOOL pipeIsGone = pipe.position.x < -70;
             int xPosition = pipeIsGone ? FIRST_PIPE_POSITION : pipe.position.x - PIPES_VELOCITY;
             int yPosition = pipeIsGone ? [self getRandomYOffest] : pipe.position.y;
             pipe.position = CGPointMake(xPosition, yPosition);
+            
+            topPipe.position = CGPointMake(xPosition, yPosition + 700);
             
         }
     }
@@ -127,7 +143,9 @@ typedef enum {
 
 -(void)removeAllPipes {
     [self removeChildrenInArray:self.pipes];
+    [self removeChildrenInArray:self.topPipes];
     self.pipes = [NSMutableArray arrayWithArray:@[]];
+    self.topPipes = [NSMutableArray arrayWithArray:@[]];
 }
 
 

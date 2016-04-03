@@ -9,7 +9,12 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 
-@interface GameViewController()
+@interface GameViewController() <GameSceneProtocol>
+@property (weak, nonatomic) IBOutlet UIView *gameOverView;
+@property (weak, nonatomic) IBOutlet UIImageView *playButton;
+@property (weak, nonatomic) IBOutlet UIImageView *moreGamesButton;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) GameScene *gameScene;
 
 @end
 
@@ -21,23 +26,38 @@
     [self setupEverything];
 }
 
--(void)setupEverything {
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupGameOverButtons];
+}
 
+-(void)setupEverything {
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+    self.gameOverView.hidden = YES;
+    skView.ignoresSiblingOrder = YES; // Some optimization
     
-    skView.ignoresSiblingOrder = YES; // Some optimizations!
-    
-    GameScene *scene = [GameScene sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
-    [skView presentScene:scene];
+    self.gameScene = [GameScene sceneWithSize:skView.bounds.size];
+    self.gameScene.scaleMode = SKSceneScaleModeAspectFill;
+    self.gameScene.gameOverDelegate = self;
+    [skView presentScene:self.gameScene];
+    [self.gameScene goToIdle];
+}
+
+-(void)setupGameOverButtons {
+    [self.playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onPlayButtonTapped)]];
+}
+
+-(void)onPlayButtonTapped {
+    [self.gameScene goToIdle];
+    [self.gameOverView setHidden:YES];
 }
 
 #pragma mark - iOS config stuff
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
@@ -51,6 +71,11 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+#pragma mark - Game Over Protocol
+- (void)onGameOverEvent {
+    [self.gameOverView setHidden:NO];
 }
 
 

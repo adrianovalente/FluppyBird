@@ -15,7 +15,6 @@ typedef enum {
 } GameStatus;
 
 @interface Bird : SKNode
-//-(void)jump;
 @end
 
 @implementation Bird
@@ -34,9 +33,6 @@ typedef enum {
         [self runAction:[SKAction repeatActionForever:flap]];
         [self setXScale:0.6];
         [self setYScale:0.6];
-        [self setPhysicsBody:[SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(26, 18)]];
-        self.physicsBody.mass = 0.1;
-        self.physicsBody.contactTestBitMask = 0x1 << 1;
     }
     return self;
 }
@@ -55,15 +51,27 @@ typedef enum {
     if (self = [super initWithSize:size]) {
         self.backgroundColor = [UIColor blueColor];
         self.status = GameStatusIdle;
+        [self setupFloor:320];
         self.physicsWorld.contactDelegate = self;
         
     }
     return self;
 }
 
--(void)initGame {
-    [self setupFloor:320];
+-(void)goToIdle {
+    [self removeBird];
     [self setupBird];
+    [self setStatus:GameStatusIdle];
+}
+
+-(void)initGame {
+    [self setStatus:GameStatusPlaying];
+    [self.player setPhysicsBody:[SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(26, 18)]];
+    [self.player.physicsBody setMass: 0.1];
+    [self.player.physicsBody setContactTestBitMask:0x1 << 1];
+    [self.player.physicsBody setVelocity:CGVectorMake(0, 0)];
+    [self.player.physicsBody applyImpulse:CGVectorMake(0, 40)];
+
 }
 
 
@@ -71,9 +79,7 @@ typedef enum {
     if(self.status == GameStatusPlaying) {
         [self.player.physicsBody setVelocity:CGVectorMake(0, 0)];
         [self.player.physicsBody applyImpulse:CGVectorMake(0, 40)];
-    } else {
-        [self removeBird];
-        [self setStatus:GameStatusPlaying];
+    } else if(self.status == GameStatusIdle){
         [self initGame];
     }
 }
@@ -81,8 +87,6 @@ typedef enum {
 -(void)update:(NSTimeInterval)currentTime {
     self.player.zRotation = M_PI * self.player.physicsBody.velocity.dy * 0.0005;
 }
-
-
 
 -(void)setupBird {
     self.player = [Bird new];
@@ -112,6 +116,7 @@ typedef enum {
 
 -(void)gameOver {
     [self setStatus:GameStatusOver];
+    [self.gameOverDelegate onGameOverEvent];
 }
 
 @end

@@ -27,14 +27,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="Bt8-Av-G5g">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="Bt8-Av-G5g">
                                         <rect key="frame" x="20" y="68" width="81" height="82"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81" id="P8P-0S-ad9"/>
                                             <constraint firstAttribute="height" constant="82" id="sEA-ci-sRX"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more" translatesAutoresizingMaskIntoConstraints="NO" id="t7h-4x-Vpo">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more" translatesAutoresizingMaskIntoConstraints="NO" id="t7h-4x-Vpo">
                                         <rect key="frame" x="147" y="68" width="81" height="82"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuZ-aT-8Ep">
@@ -70,6 +70,12 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="gameOverView" destination="6gu-ZD-yru" id="2AL-YC-6Af"/>
+                        <outlet property="moreGamesButton" destination="t7h-4x-Vpo" id="X0Z-G9-b9v"/>
+                        <outlet property="playButton" destination="Bt8-Av-G5g" id="NEe-FK-fw3"/>
+                        <outlet property="scoreLabel" destination="tuZ-aT-8Ep" id="aaE-KL-6zn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>

@@ -9,6 +9,10 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 
+@interface GameViewController()
+
+@end
+
 @implementation GameViewController
 
 #pragma mark - Setup methods

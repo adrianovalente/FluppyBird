@@ -1,25 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8118" systemVersion="15A172" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8098"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
                     </layoutGuides>
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gu-ZD-yru" userLabel="GameOverView">
+                                <rect key="frame" x="36" y="159" width="248" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Over" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmB-Ay-ZTg">
+                                        <rect key="frame" x="20" y="20" width="208" height="27"/>
+                                        <fontDescription key="fontDescription" name="KohinoorBangla-Semibold" family="Kohinoor Bangla" pointSize="19"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="Bt8-Av-G5g">
+                                        <rect key="frame" x="20" y="68" width="81" height="82"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="81" id="P8P-0S-ad9"/>
+                                            <constraint firstAttribute="height" constant="82" id="sEA-ci-sRX"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more" translatesAutoresizingMaskIntoConstraints="NO" id="t7h-4x-Vpo">
+                                        <rect key="frame" x="147" y="68" width="81" height="82"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuZ-aT-8Ep">
+                                        <rect key="frame" x="0.0" y="55" width="248" height="19"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.97992928554679892" blue="0.6687532898622448" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dmB-Ay-ZTg" secondAttribute="trailing" constant="20" id="4Xm-Gg-TWx"/>
+                                    <constraint firstAttribute="height" constant="150" id="5XC-0l-3Wh"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bt8-Av-G5g" secondAttribute="bottom" id="DxA-Xb-6Rm"/>
+                                    <constraint firstAttribute="trailing" secondItem="t7h-4x-Vpo" secondAttribute="trailing" constant="20" id="FkI-7U-Ebe"/>
+                                    <constraint firstItem="t7h-4x-Vpo" firstAttribute="centerY" secondItem="Bt8-Av-G5g" secondAttribute="centerY" id="Ivc-Er-E5f"/>
+                                    <constraint firstItem="Bt8-Av-G5g" firstAttribute="leading" secondItem="6gu-ZD-yru" secondAttribute="leading" constant="20" id="MgW-vf-L9k"/>
+                                    <constraint firstItem="dmB-Ay-ZTg" firstAttribute="leading" secondItem="6gu-ZD-yru" secondAttribute="leading" constant="20" id="OM7-iF-EXP"/>
+                                    <constraint firstItem="t7h-4x-Vpo" firstAttribute="width" secondItem="Bt8-Av-G5g" secondAttribute="width" id="X18-fL-Rvx"/>
+                                    <constraint firstItem="tuZ-aT-8Ep" firstAttribute="top" secondItem="dmB-Ay-ZTg" secondAttribute="bottom" constant="8" id="YKS-YU-uGk"/>
+                                    <constraint firstItem="dmB-Ay-ZTg" firstAttribute="top" secondItem="6gu-ZD-yru" secondAttribute="top" constant="20" id="dD0-7b-rJp"/>
+                                    <constraint firstItem="t7h-4x-Vpo" firstAttribute="height" secondItem="Bt8-Av-G5g" secondAttribute="height" id="eT0-QA-x0N"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="6gu-ZD-yru" firstAttribute="centerY" secondItem="3se-qz-xqx" secondAttribute="centerY" constant="-50" id="3Yf-MY-UIt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tuZ-aT-8Ep" secondAttribute="trailing" constant="20" id="50N-S1-kPb"/>
+                            <constraint firstItem="tuZ-aT-8Ep" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="20" id="HWK-Tb-ML9"/>
+                            <constraint firstItem="6gu-ZD-yru" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="20" id="sM3-bv-CXj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6gu-ZD-yru" secondAttribute="trailing" constant="20" id="xFk-8I-Yl7"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="256" y="324"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="more" width="400" height="400"/>
+        <image name="play" width="400" height="400"/>
+    </resources>
 </document>
